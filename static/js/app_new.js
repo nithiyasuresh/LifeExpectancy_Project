@@ -13,7 +13,7 @@ d3.csv('https://raw.githubusercontent.com/nithiyasuresh/life_exp/main/life_exp/d
         }
         // If a container for this Year + region doesn't exist yet,
         // then create one:
-        if (!(trace = byYear[region])) {
+        if (!(trace = byYear[region])) {    
             trace = byYear[region] = {
                 yr: [],
                 rgn: [],
