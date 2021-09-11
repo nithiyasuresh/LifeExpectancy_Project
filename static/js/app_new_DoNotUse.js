@@ -1,11 +1,9 @@
 // gapminder code from plotly example - https://plotly.com/javascript/gapminder-example/
-// request.headers.append('Access-Control-Allow-Origin', 'http://127.0.0.1:5000/');
-// request.headers.append('Access-Control-Allow-Credentials', 'true');
-const url = "/api/countries";
-d3.json(url).then(function (data) {
+// headers.append('Access-Control-Allow-Origin', 'http://127.0.0.1:5000/');
+// headers.append('Access-Control-Allow-Credentials', 'true');
+
+d3.jsonp('http://127.0.0.1:5000/').then(function (data) {
     console.log(data);
-    // const data = response;
-    // d3.json("http://127.0.0.1:5000/");
     // Create a lookup table to sort and regroup the columns of data,
     // first by Year, then by region:
     var lookup = {};
@@ -17,7 +15,7 @@ d3.json(url).then(function (data) {
         }
         // If a container for this Year + region doesn't exist yet,
         // then create one:
-        if (!(trace = byYear[region])) {
+        if (!(trace = byYear[region])) {    
             trace = byYear[region] = {
                 yr: [],
                 rgn: [],
@@ -179,18 +177,10 @@ d3.json(url).then(function (data) {
 
 // 3rd visualisation - world map
 
-const url = "/api/life_2015";
-d3.json(url).then(function (rows) {
-    function unpack(rows, key) {
-        return rows.map(function(row) { return row[key]; });
-    // console.log(rows);
-
-
-// d3.csv('https://raw.githubusercontent.com/nithiyasuresh/life_exp/main/life_exp/data/Life_2015.csv').then (function(rows) {
-    //   function unpack(rows, key) {
-    //       return rows.map(function(row) { return row[key]; });
+d3.csv('https://raw.githubusercontent.com/nithiyasuresh/life_exp/main/life_exp/data/Life_2015.csv').then (function(rows) {
+      function unpack(rows, key) {
+          return rows.map(function(row) { return row[key]; });
       }
-    
 
     var data_map = [{
         type: 'choropleth',
