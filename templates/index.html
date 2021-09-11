@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Pet Pals!</title>
+    <link rel="stylesheet" href="./static/css/style.css">
+    <link rel="stylesheet" href="./static/css/mycss.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="jumbotron" style="text-align: center">
+            <h1>Life Expectancy</h1>
+            <p>My Analysis</p>
+        </div>
+
+        <div class="row">
+
+            <!-- Choropleth chart in a world map -->
+
+            <div class="col-md-12">
+                <h2>World Map view</h2>
+                <h6 class="title">Life expectancy by country</h6>
+                <div id="choropleth"></div>
+            </div>
+
+            <!-- Box plot with continents -->
+            <div class="col-lg-7">
+                <div class="box">
+                    <h2 class="title">Life Expectancy by continent</h2>
+                    <img src="./static/Images/RegionBoxplot.png" alt="Box Plot of Regions">
+                </div>
+            </div>
+
+            <!-- Bubble chart that is country -->
+
+            <div class="col-md-12">
+                <h2>Life Expectancy Vs GDP by country</h2>
+                <div id="bubble_plot_country"></div>
+            </div>
+
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-12">
+                <h2><a href="/send"></a></h2>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.min.js"></script>
+
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="./static/js/app_new.js"></script>
+</body>
+
+</html>
