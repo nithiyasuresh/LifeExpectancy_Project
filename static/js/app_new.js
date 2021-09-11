@@ -1,8 +1,10 @@
 // gapminder code from plotly example - https://plotly.com/javascript/gapminder-example/
-// request.headers.append('Access-Control-Allow-Origin', 'http://127.0.0.1:5000/');
-// request.headers.append('Access-Control-Allow-Credentials', 'true');
-const url = "/api/countries";
-d3.json(url).then(function (data) {
+
+// const url = "/api/countries";
+// d3.json(url).then(function (data) {
+//     console.log(data);
+
+d3.csv('https://raw.githubusercontent.com/nithiyasuresh/LifeExpectancy_Project/main/data/Life.csv').then(function (data) {
     console.log(data);
     // const data = response;
     // d3.json("http://127.0.0.1:5000/");
@@ -179,16 +181,16 @@ d3.json(url).then(function (data) {
 
 // 3rd visualisation - world map
 
-const url = "/api/life_2015";
-d3.json(url).then(function (rows) {
-    function unpack(rows, key) {
-        return rows.map(function(row) { return row[key]; });
-    // console.log(rows);
+// const url = "/api/life_2015";
+// d3.json(url).then(function (rows) {
+//     function unpack(rows, key) {
+//         return rows.map(function(row) { return row[key]; });
+//     // console.log(rows);
 
 
-// d3.csv('https://raw.githubusercontent.com/nithiyasuresh/life_exp/main/life_exp/data/Life_2015.csv').then (function(rows) {
-    //   function unpack(rows, key) {
-    //       return rows.map(function(row) { return row[key]; });
+d3.csv('https://github.com/nithiyasuresh/LifeExpectancy_Project/blob/main/data/Life_2015.csv').then (function(rows) {
+      function unpack(rows, key) {
+          return rows.map(function(row) { return row[key]; });
       }
     
 
