@@ -50,7 +50,7 @@ def welcome():
         f"/api/life_2015"
     )
 
-@app.route("/home")
+@app.route("/index.html")
 def home():
     return render_template("index.html")
 
