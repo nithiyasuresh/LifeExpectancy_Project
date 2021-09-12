@@ -5,9 +5,11 @@ from flask import (
     request, 
     render_template,
     redirect)
+from flask_cors import CORS
 
 #define app
 app = Flask(__name__)
+CORS(app)
 
 #define database path
 DATABASE_NAME = "data/db.sqlite"

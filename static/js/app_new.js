@@ -1,8 +1,11 @@
 // gapminder code from plotly example - https://plotly.com/javascript/gapminder-example/
+// request.headers.append('Access-Control-Allow-Origin', 'http://127.0.0.1:5000/');
+// request.headers.append('Access-Control-Allow-Credentials', 'true');
 
+// d3.json("http://127.0.0.1:5000/api/countries").then(function (data) {
 d3.csv('https://raw.githubusercontent.com/nithiyasuresh/LifeExpectancy_Project/main/data/Life.csv').then(function (data) {
-    // console.log(data);
-
+    console.log(data);
+    // d3.json("http://127.0.0.1:5000/");
     // Create a lookup table to sort and regroup the columns of data,
     // first by Year, then by region:
     var lookup = {};
@@ -176,18 +179,11 @@ d3.csv('https://raw.githubusercontent.com/nithiyasuresh/LifeExpectancy_Project/m
 
 // 3rd visualisation - world map
 
-// const url = "/api/life_2015";
-// d3.json(url).then(function (rows) {
-//     function unpack(rows, key) {
-//         return rows.map(function(row) { return row[key]; });
-//     // console.log(rows);
-
-
-d3.csv('https://github.com/nithiyasuresh/LifeExpectancy_Project/blob/main/data/Life_2015.csv').then(function (rows) {
-    function unpack(rows, key) {
-        return rows.map(function (row) { return row[key]; });
-    }
-
+// d3.json("http://127.0.0.1:5000/api/life_2015").then (function(rows) {
+d3.csv('https://raw.githubusercontent.com/nithiyasuresh/life_exp/main/life_exp/data/Life_2015.csv').then (function(rows) {
+      function unpack(rows, key) {
+          return rows.map(function(row) { return row[key]; });
+      }
 
     var data_map = [{
         type: 'choropleth',
@@ -199,200 +195,14 @@ d3.csv('https://github.com/nithiyasuresh/LifeExpectancy_Project/blob/main/data/L
     }];
 
     var layout_map = {
-        title: 'Life Expectancy for 2015 across the world',
-        geo: {
-            projection: {
-                type: 'robinson'
-            }
-        }
+      title: 'Life Expectancy for 2015 across the world',
+      geo: {
+          projection: {
+              type: 'robinson'
+          }
+      }
     };
 
-    Plotly.newPlot("choropleth", data_map, layout_map, { showLink: false });
+    Plotly.newPlot("choropleth", data_map, layout_map, {showLink: false});
 
 });
-
-// ************************************************************************************************** //
-// 2nd Visualisation - Box plots
-// ************************************************************************************************** //
-d3.csv('https://raw.githubusercontent.com/nithiyasuresh/LifeExpectancy_Project/main/data/Life.csv').then(function (databox) {
-console.log(databox);
-
-var firstYear1 = lookup[Years[15]];
-
-
-var trace_1;
-var databox = firstYear1[regions[0]];
-trace_1 = databox.x
-
-var trace_1d = {
-    y: trace_1,
-    type: "box",
-    type: 'box',
-    name: 'Asia',
-    jitter: 0.3,
-    pointpos: -1.8,
-    marker: {
-        color: 'rgb(0,109,44)'
-    },
-    boxpoints: 'all'
-};
-
-var trace_2;
-var databox = firstYear1[regions[1]];
-trace_2 = data.x
-
-var trace_2d = {
-    y: trace_2,
-    type: "box",
-    type: 'box',
-    name: 'Europe',
-    jitter: 0.3,
-    pointpos: -1.8,
-    marker: {
-        color: 'rgb(178,226,226)'
-    },
-    boxpoints: 'all'
-};
-
-var trace_3;
-var databox = firstYear1[regions[2]];
-trace_3 = data.x
-
-var trace_3d = {
-    y: trace_3,
-    type: "box",
-    type: 'box',
-    name: 'Africa',
-    jitter: 0.3,
-    pointpos: -1.8,
-    marker: {
-        color: 'rgb(237,248,251)'
-    },
-    boxpoints: 'all'
-};
-
-var trace_4;
-var databox = firstYear1[regions[3]];
-trace_4 = data.x
-
-var trace_4d = {
-    y: trace_4,
-    type: "box",
-    type: 'box',
-    name: 'Americas',
-    jitter: 0.3,
-    pointpos: -1.8,
-    marker: {
-        color: 'rgb(102,194,164)'
-    },
-    boxpoints: 'all'
-};
-
-var trace_5;
-var databox = firstYear1[regions[4]];
-trace_5 = data.x
-
-var trace_5d = {
-    y: trace_5,
-    type: "box",
-    type: 'box',
-    name: 'Oceania',
-    jitter: 0.3,
-    pointpos: -1.8,
-    marker: {
-        color: 'rgb(44,162,95)'
-    },
-    boxpoints: 'all'
-};
-
-
-var databox = [trace_1d, trace_2d, trace_3d, trace_4d, trace_5d];
-
-var layout = {
-    title: 'Box Plot Styling Outliers'
-};
-
-Plotly.newPlot('boxplot', data, layout);
-
-});
-
-
-
-// // Adding drop down of country
-
-// Plotly.d3.csv('https://raw.githubusercontent.com/nithiyasuresh/LifeExpectancy_Project/main/data/Life.csv').then(function(dropdown){
-
-//     function unpack(dropdown, key) {
-//         return dropdown.map(function(dropdown) { return dropdown[key]; });
-//     }
-
-// var allCountryNames = unpack(rows, 'Country'),
-//     allYear = unpack(rows, 'Year'),
-//     allGdp = unpack(rows, 'Population'),
-//     listofCountries = [],
-//     currentCountry,
-//     currentGdp = [],
-//     currentYear = [];
-
-//   for (var i = 0; i < allCountryNames.length; i++ ){
-//     if (listofCountries.indexOf(allCountryNames[i]) === -1 ){
-//       listofCountries.push(allCountryNames[i]);
-//     }
-//   }
-
-//   function getCountryData(chosenCountry) {
-//     currentGdp = [];
-//     currentYear = [];
-//     for (var i = 0 ; i < allCountryNames.length ; i++){
-//       if ( allCountryNames[i] === chosenCountry ) {
-//         currentGdp.push(allGdp[i]);
-//         currentYear.push(allYear[i]);
-//       } 
-//     }
-//   };
-
-// // Default Country Data
-// setBubblePlot('Afghanistan');
-
-// function setBubblePlot(chosenCountry) {
-//     getCountryData(chosenCountry);  
-
-//     var trace1 = {
-//       x: currentYear,
-//       y: currentGdp,
-//       mode: 'lines+markers',
-//       marker: {
-//         size: 12, 
-//         opacity: 0.5
-//       }
-//     };
-
-//     var data = [trace1];
-
-//     var layout = {
-//       title: 'GDP per cap according to Country<br>'+ chosenCountry + ' GDP'
-//     };
-
-//     Plotly.newPlot('plotdiv', data, layout, {showSendToCloud: true});
-// };
-
-// var innerContainer = document.querySelector('[data-num="0"'),
-//     plotEl = innerContainer.querySelector('.plot'),
-//     countrySelector = innerContainer.querySelector('.countrydata');
-
-// function assignOptions(textArray, selector) {
-//   for (var i = 0; i < textArray.length;  i++) {
-//       var currentOption = document.createElement('option');
-//       currentOption.text = textArray[i];
-//       selector.appendChild(currentOption);
-//   }
-// }
-
-// assignOptions(listofCountries, countrySelector);
-
-// function updateCountry(){
-//     setBubblePlot(countrySelector.value);
-// }
-
-// countrySelector.addEventListener('change', updateCountry, false);
-// });
