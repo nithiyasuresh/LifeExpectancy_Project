@@ -35,14 +35,14 @@ d3.json("http://127.0.0.1:5000/api/countries").then(function (data) {
     // Go through each row, get the right trace, and append the data:
     for (var i = 0; i < data.length; i++) {
         var datum = data[i];
-        var trace = getData(datum.Year, datum.region);
-        trace.yr.push(datum.Year);
-        trace.rgn.push(datum.region);
-        trace.text.push(datum.Country);
-        trace.id.push(datum.Country);
-        trace.x.push(datum.Life_Expectancy);
-        trace.y.push(datum.GDP);
-        trace.marker.size.push(datum.Population);
+        var trace = getData(datum[1], datum[22]);
+        trace.yr.push(datum[1]); //Year
+        trace.rgn.push(datum[22]); //Region
+        trace.text.push(datum[0]); //Country
+        trace.id.push(datum[0]); //Country
+        trace.x.push(datum[3]); //Life Exp
+        trace.y.push(datum[16]); //GDP
+        trace.marker.size.push(datum[17]); //population
     }
 
     // Get the group names:
@@ -54,7 +54,7 @@ d3.json("http://127.0.0.1:5000/api/countries").then(function (data) {
 
     // Create the main traces, one for each region:
     var traces = [];
-    for (i = 0; i < regions.length; i++) {
+    for (i = 0; i < regions.length - 1; i++) {
         var data = firstYear[regions[i]];
         // One small note. We're creating a single trace here, to which
         // the frames will pass data for the different Years. It's
@@ -179,8 +179,9 @@ d3.json("http://127.0.0.1:5000/api/countries").then(function (data) {
 
 // 3rd visualisation - world map
 
-// d3.json("http://127.0.0.1:5000/api/life_2015").then (function(rows) {
-d3.csv('https://raw.githubusercontent.com/nithiyasuresh/life_exp/main/life_exp/data/Life_2015.csv').then (function(rows) {
+d3.json("http://127.0.0.1:5000/api/life_2015").then(function (rows) {
+// d3.csv('https://raw.githubusercontent.com/nithiyasuresh/life_exp/main/life_exp/data/Life_2015.csv').then (function(rows) {
+    // console.log(rows)
       function unpack(rows, key) {
           return rows.map(function(row) { return row[key]; });
       }
@@ -188,9 +189,9 @@ d3.csv('https://raw.githubusercontent.com/nithiyasuresh/life_exp/main/life_exp/d
     var data_map = [{
         type: 'choropleth',
         locationmode: 'country names',
-        locations: unpack(rows, 'Country'),
-        z: unpack(rows, 'Life_Expectancy'),
-        text: unpack(rows, 'Country'),
+        locations: unpack(rows, '0'),
+        z: unpack(rows, '3')  ,
+        text: unpack(rows, '0'),
         autocolorscale: true
     }];
 

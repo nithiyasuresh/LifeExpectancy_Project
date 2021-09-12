@@ -36,7 +36,7 @@ def get_all():
 def get_2015():
     db = get_db()
     cursor = db.cursor()
-    query = "SELECT * FROM LIFE_2015"
+    query = "SELECT * FROM Life WHERE Year = 2015"
     cursor.execute(query)
     return cursor.fetchall()    
 
@@ -50,7 +50,7 @@ def welcome():
         f"/api/life_2015"
     )
 
-@app.route("/index.html")
+@app.route("/home")
 def home():
     return render_template("index.html")
 
