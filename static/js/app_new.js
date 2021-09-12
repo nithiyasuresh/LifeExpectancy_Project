@@ -1,7 +1,7 @@
 // gapminder code from plotly example - https://plotly.com/javascript/gapminder-example/
 
 d3.csv('https://raw.githubusercontent.com/nithiyasuresh/LifeExpectancy_Project/main/data/Life.csv').then(function (data) {
-    console.log(data);
+    // console.log(data);
 
     // Create a lookup table to sort and regroup the columns of data,
     // first by Year, then by region:
@@ -215,6 +215,8 @@ d3.csv('https://github.com/nithiyasuresh/LifeExpectancy_Project/blob/main/data/L
 // 2nd Visualisation - Box plots
 // ************************************************************************************************** //
 d3.csv('https://raw.githubusercontent.com/nithiyasuresh/LifeExpectancy_Project/main/data/Life.csv').then(function (databox) {
+console.log(databox);
+
 var firstYear1 = lookup[Years[15]];
 
 
