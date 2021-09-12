@@ -211,13 +211,16 @@ d3.csv('https://github.com/nithiyasuresh/LifeExpectancy_Project/blob/main/data/L
 
 });
 
-
+// ************************************************************************************************** //
+// 2nd Visualisation - Box plots
+// ************************************************************************************************** //
+d3.csv('https://raw.githubusercontent.com/nithiyasuresh/LifeExpectancy_Project/main/data/Life.csv').then(function (databox) {
 var firstYear1 = lookup[Years[15]];
 
 
 var trace_1;
-var data = firstYear1[regions[0]];
-trace_1 = data.x
+var databox = firstYear1[regions[0]];
+trace_1 = databox.x
 
 var trace_1d = {
     y: trace_1,
@@ -233,7 +236,7 @@ var trace_1d = {
 };
 
 var trace_2;
-var data = firstYear1[regions[1]];
+var databox = firstYear1[regions[1]];
 trace_2 = data.x
 
 var trace_2d = {
@@ -250,7 +253,7 @@ var trace_2d = {
 };
 
 var trace_3;
-var data = firstYear1[regions[2]];
+var databox = firstYear1[regions[2]];
 trace_3 = data.x
 
 var trace_3d = {
@@ -267,7 +270,7 @@ var trace_3d = {
 };
 
 var trace_4;
-var data = firstYear1[regions[3]];
+var databox = firstYear1[regions[3]];
 trace_4 = data.x
 
 var trace_4d = {
@@ -284,7 +287,7 @@ var trace_4d = {
 };
 
 var trace_5;
-var data = firstYear1[regions[4]];
+var databox = firstYear1[regions[4]];
 trace_5 = data.x
 
 var trace_5d = {
@@ -301,7 +304,7 @@ var trace_5d = {
 };
 
 
-var data = [trace_1d, trace_2d, trace_3d, trace_4d, trace_5d];
+var databox = [trace_1d, trace_2d, trace_3d, trace_4d, trace_5d];
 
 var layout = {
     title: 'Box Plot Styling Outliers'
