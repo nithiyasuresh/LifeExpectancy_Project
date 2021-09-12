@@ -68,4 +68,4 @@ def get_life_2015():
 #app main
 if __name__ == "__main__":
     
-    app.run()
+    app.run(debug=True)
