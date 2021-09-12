@@ -1,11 +1,9 @@
-// gapminder code from plotly example - https://plotly.com/javascript/gapminder-example/
-
 d3.csv('./data/Life.csv').then(function (data) {
     console.log(data);
     // Create a lookup table to sort and regroup the columns of data,
     // first by Year, then by region:
     var rows = data
-    console.log(rows)
+    // console.log(rows)
 
     var lookup = {};
     function getData(Year, region) {
@@ -31,30 +29,6 @@ d3.csv('./data/Life.csv').then(function (data) {
         return trace;
     }
 
-    var chloro = {};
-    function getDataGraph(Year) {
-        var byYear, trace;
-        if (!(byYear = chloro[Year])) {
-            ;
-            byYear = chloro[Year] = {};
-        }
-        // If a container for this Year + region doesn't exist yet,
-        // then create one:
-        // if (!(trace = byYear[region])) {
-        //     trace = {
-        //         yr: [],
-        //         rgn: [],
-        //         x: [],
-        //         y: [],
-        //         id: [],
-        //         text: [],
-        //         marker: { size: [] }
-        //     };
-        // }
-        // console.log(trace);
-        return trace;
-    }
-
     // Go through each row, get the right trace, and append the data:
     for (var i = 0; i < data.length; i++) {
         var datum = data[i];
@@ -68,16 +42,15 @@ d3.csv('./data/Life.csv').then(function (data) {
         trace.marker.size.push(datum.Population);
     }
 
-    // Get the group names:
+
     var Years = Object.keys(lookup);
     // In this case, every Year includes every region, so we
     // can just infer the regions from the *first* Year:
     var firstYear = lookup[Years[0]];
     var regions = Object.keys(firstYear);
 
-    console.log(regions)
+    console.log(Years)
 
-    // Create the main traces, one for each region:
     var traces = [];
     for (i = 0; i < regions.length; i++) {
         var data = firstYear[regions[i]];
@@ -99,13 +72,9 @@ d3.csv('./data/Life.csv').then(function (data) {
                 sizeref: 200000
             }
         });
-    }
-    console.log(traces)
 
-    // Create a frame for each Year. Frames are effectively just
-    // traces, except they don't need to contain the *full* trace
-    // definition (for example, appearance). The frames just need
-    // the parts the traces that change (here, the data).
+    }
+
     var frames = [];
     for (i = 0; i < Years.length; i++) {
         frames.push({
@@ -115,19 +84,7 @@ d3.csv('./data/Life.csv').then(function (data) {
             })
         });
     }
-    console.log(frames)
-    
-    // var pic = [];
-    // for (i = 0; i < Years.length; i++) {
-    //     pic.push({
-    //         name: Years[i],
-    //         data: regions.map(function (region) {
-    //             return getDataGraph(Years[i]);
-    //         })
-    //     });
-    // }
-    // console.log(pic)
-
+    console.log(traces)
     // Now create slider steps, one for each frame. The slider
     // executes a plotly.js API command (here, Plotly.animate).
     // In this example, we'll animate to one of the named frames
@@ -148,7 +105,7 @@ d3.csv('./data/Life.csv').then(function (data) {
     var layout = {
         xaxis: {
             title: 'Life Expectancy',
-            range: [30, 85]
+            range: [0, 100]
         },
         yaxis: {
             title: 'GDP per Capita',
@@ -204,40 +161,25 @@ d3.csv('./data/Life.csv').then(function (data) {
         }]
     };
 
-
     // Create the plot:
     Plotly.plot('bubble_plot_country', {
         data: traces,
         layout: layout,
-        config: { showSendToCloud: true },
+        config: { responsive: true },
         frames: frames,
     });
-    console.log(frames)
 
-    // var rows = data
-    // console.log(rows)
+    ////////////////////////////////////////////////////////////////
+
+
 
     function unpack(rows, key, year) {
         var row_year = rows.filter(t => t.Year == year)
-        return row_year.map(function(row) { return row[key]; });
+        return row_year.map(function (row) { return row[key]; });
     }
 
-    // var rows = data
 
-    var sliderSteps2 = [];
-    for (i = 0; i < Years.length; i++) {
-        sliderSteps2.push({
-            method: 'animate',
-            label: Years[i],
-            args: [[Years[i]], {
-                mode: 'immediate',
-                transition: { duration: 300 },
-                frame: { duration: 300, redraw: false },
-            }]
-        });
-    }
-
-    var traces = [];
+    var traces_c = [];
     for (i = 0; i < regions.length; i++) {
         var data = firstYear[regions[i]];
         // One small note. We're creating a single trace here, to which
@@ -245,8 +187,8 @@ d3.csv('./data/Life.csv').then(function (data) {
         // subtle, but to avoid data reference problems, we'll slice 
         // the arrays to ensure we never write any new data into our
         // lookup table:
-        console.log(data)
-        traces.push({
+        // console.log(data)
+        traces_c.push({
             name: regions[i],
             x: data.x.slice(),
             y: data.y.slice(),
@@ -262,21 +204,12 @@ d3.csv('./data/Life.csv').then(function (data) {
             text: data.text.slice(),
             autocolorscale: true
         });
-        console.log(traces)
-    }
 
-    var data_year = {
-        type: 'choropleth',
-        locationmode: 'country names',
-        locations: unpack(rows, 'Country',2000),
-        z: unpack(rows, 'Life_Expectancy',2000),
-        text: unpack(rows, 'Country', 2000),
-        autocolorscale: true
-    };
+    }
+    console.log(traces_c)
 
     data_map = []
-
-    for(var i = 2000; i <= 2015; i++ ) {
+    for (var i = 2000; i <= 2015; i++) {
         var entry = {}
         var data_year = {
             type: 'choropleth',
@@ -291,73 +224,165 @@ d3.csv('./data/Life.csv').then(function (data) {
         data_map.push(data_year)
     }
 
-//   var data_map = [{
-//       type: 'choropleth',
-//       locationmode: 'country names',
-//       locations: unpack(rows, 'Country'),
-//       z: unpack(rows, 'Life_Expectancy'),
-//       text: unpack(rows, 'Country'),
-//       autocolorscale: true
-//   }];
-  console.log(data_map)
+    console.log(data_map)
 
-  var layout_map = {
-    title: 'Life Expectancy for 2015 across the world',
-    geo: {
-        projection: {
-            type: 'robinson'
-        }
-    },
-    updatemenus: [{
-      x: 0,
-      y: 0,
-      yanchor: 'top',
-      xanchor: 'left',
-      showactive: false,
-      direction: 'left',
-      type: 'buttons',
-      pad: { t: 87, r: 10 },
-      buttons: [{
-          method: 'animate',
-          args: [null, {
-              mode: 'immediate',
-              fromcurrent: true,
-              transition: { duration: 300 },
-              frame: { duration: 500, redraw: false }
-          }],
-          label: 'Play'
-      }, {
-          method: 'animate',
-          args: [[null], {
-              mode: 'immediate',
-              transition: { duration: 0 },
-              frame: { duration: 0, redraw: false }
-          }],
-          label: 'Pause'
-      }]
-  }],
-  //         // Finally, add the slider and use `pad` to position it
-  //         // nicely next to the buttons.
-  sliders: [{
-      pad: { l: 130, t: 55 },
-      currentvalue: {
-          visible: true,
-          prefix: 'Year:',
-          xanchor: 'right',
-          font: { size: 20, color: '#666' }
-      },
-      steps: sliderSteps2
-  }]
-  };
 
-//   Plotly.newPlot("choropleth", traces, layout_map, {showLink: false},frames: frames);
-  Plotly.plot("choropleth", {
-    data: [data_year],
-    layout: layout_map,
-    config: { showSendToCloud: true },
-    frames: data_map,
+    var frames = [];
+    for (i = 0; i < Years.length; i++) {
+        frames.push({
+            name: Years[i],
+            data: regions.map(function (region) {
+                return getData(Years[i], region);
+            })
+        });
+    }
+    console.log(frames)
+
+    var layout_map = {
+        title: 'Life Expectancy for Year 2015 Across The World',
+        geo: {
+            projection: {
+                type: 'robinson'
+            }
+        },
+        updatemenus: [{
+            x: 0,
+            y: 0,
+            yanchor: 'top',
+            xanchor: 'left',
+            showactive: false,
+            direction: 'left',
+            type: 'buttons',
+            pad: { t: 87, r: 10 },
+        
+        }],
+    };
+
+    Plotly.plot("choropleth", {
+        data: [data_year],
+        layout: layout_map,
+        config: { responsive: true },
+        frames: data_map, frames
+    });
+
+
+    // Building default Box Plot:
+    // Selecting HTML ID for dropdown variable.
+    var dropdown = d3.select("#selDataset")
+    // console.log(dropdown)
+    // Setting loop for each Year to be appended in to dropdown. 
+    Years.forEach((year) => {
+        dropdown.append("option").text(year).property("value", year)
+        // console.log(year)
+    });
+
+    d3.select("#selDataset").on('change', buildChart)
+
+    function buildChart() {
+        // Change the current key and call the function to update the colors. 
+        currentKey = d3.select("#selDataset").property('value');
+        // updateMapColors();
+        console.log(currentKey)
+        var firstYear1 = lookup[Years[parseInt(currentKey) - 2000]];
+        // var firstYear1 = Years.filter(obj => obj.name == selected) 
+        //  console.log(firstYear1)
+
+
+        var trace_1;
+        var data = firstYear1[regions[0]];
+        trace_1 = data.x
+
+        var trace_1d = {
+            y: trace_1,
+            type: "box",
+            type: 'box',
+            name: 'Asia',
+            jitter: 0.3,
+            pointpos: -1.8,
+            marker: {
+                color: 'rgb(165,15,21)'
+            },
+            boxpoints: 'all'
+        };
+
+        var trace_2;
+        var data = firstYear1[regions[1]];
+        trace_2 = data.x
+
+        var trace_2d = {
+            y: trace_2,
+            type: "box",
+            type: 'box',
+            name: 'Europe',
+            jitter: 0.3,
+            pointpos: -1.8,
+            marker: {
+                color: 'rgb(37,52,148)'
+            },
+            boxpoints: 'all'
+        };
+
+        var trace_3;
+        var data = firstYear1[regions[2]];
+        trace_3 = data.x
+
+        var trace_3d = {
+            y: trace_3,
+            type: "box",
+            type: 'box',
+            name: 'Africa',
+            jitter: 0.3,
+            pointpos: -1.8,
+            marker: {
+                color: 'rgb(0,104,55)'
+            },
+            boxpoints: 'all'
+        };
+
+        var trace_4;
+        var data = firstYear1[regions[3]];
+        trace_4 = data.x
+
+        var trace_4d = {
+            y: trace_4,
+            type: "box",
+            type: 'box',
+            name: 'Americas',
+            jitter: 0.3,
+            pointpos: -1.8,
+            marker: {
+                color: 'rgb(136,86,167)'
+            },
+            boxpoints: 'all'
+        };
+
+        var trace_5;
+        var data = firstYear1[regions[4]];
+        trace_5 = data.x
+
+        var trace_5d = {
+            y: trace_5,
+            type: "box",
+            type: 'box',
+            name: 'Oceania',
+            jitter: 0.3,
+            pointpos: -1.8,
+            marker: {
+                color: 'rgb(65,182,196)'
+            },
+            boxpoints: 'all'
+        };
+
+
+        var data = [trace_1d, trace_2d, trace_3d, trace_4d, trace_5d];
+
+        var layout = {
+            title: 'Box Plot Styling Outliers'
+        };
+
+        var config = {responsive: true}
+
+        Plotly.newPlot('mydiv', data, layout, config);
+    }
+    buildChart();
 });
-});
-
-
-// 3rd visualisation - world map
